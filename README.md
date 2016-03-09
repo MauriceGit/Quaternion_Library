@@ -9,5 +9,7 @@ with Quaternions. It is used for all calculations of the new rotated position.
 
 # ToDo:
 
-When I have some spare time, I will eliminate the imageloader and replace it with my own.
-From this point on, this sample and library will be Open Source and free to use and distribute.
+- When I have some spare time, I will eliminate the imageloader and replace it with my own.
+    From this point on, this sample and library will be Open Source and free to use and distribute.
+
+- Translate all comments (at least inside the Quaternion-library) to english.
