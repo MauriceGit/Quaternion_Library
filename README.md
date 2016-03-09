@@ -13,3 +13,5 @@ with Quaternions. It is used for all calculations of the new rotated position.
     From this point on, this sample and library will be Open Source and free to use and distribute.
 
 - Translate all comments (at least inside the Quaternion-library) to english.
+
+- Get rid of dependencies to some of my other libraries (vector, types, ...).
