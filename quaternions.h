@@ -19,7 +19,7 @@ typedef struct
     Vector3D v;
 } Quaternion;
 
-void multQuaterionQuaterion (const Quaternion* q1, const Quaternion* q2, Quaternion * res);
+void multQuaternionQuaternion (const Quaternion* q1, const Quaternion* q2, Quaternion * res);
 
 void multQuaternionScalar (const Quaternion* q1, double s, Quaternion* res);
 
