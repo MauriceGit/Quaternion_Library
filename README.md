@@ -55,8 +55,8 @@ qtmp->v[2] = q->v[2];
 // The actual calculations.
 //  ---  q p q*  ---
 inverseQuaternion(&qtmp, &inverseQ);
-multQuaterionQuaterion (&qtmp, &p, &res);
-multQuaterionQuaterion (&res, &inverseQ, &res);
+multQuaterionQuaternion (&qtmp, &p, &res);
+multQuaterionQuaternion (&res, &inverseQ, &res);
 
 // Write new rotated coordinates back to the point
 point[0] = res->v[0];
