@@ -15,6 +15,7 @@ This example code is in C syntax and serves only to demonstrate a potential use 
 calculate a rotation. It uses types and libraries, defined in the files: **quaternions.h**, **vector.h**, **types.h** from the sample code.
 It might or might not need some adjustments to work.
 
+```c
     // define normalised axis
     Vector3D a = {0.0, 1.0, 0.0};
     // define angle
@@ -51,6 +52,7 @@ It might or might not need some adjustments to work.
     // Of course - free your memory!
     free(q);
     free(p);
+```
 
 # License
 
