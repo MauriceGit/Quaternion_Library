@@ -57,6 +57,31 @@ free(q);
 free(p);
 ```
 
+# Compile and Run
+
+I only tested and ran this simulation on a debian-based Linux OS (Ubuntu, Mint, ...). It should run on other machines as well but is not
+tested.
+
+## **Requirements**
+
+The following system-attributes are required for running this simulation:
+
+- A graphics card supporting OpenGL.
+
+- Unix-Libraries: xorg-dev, freeglut3-dev and mesa-common-dev
+
+## **Running**
+
+Execute the following steps to run the sample:
+
+- ./compile.sh
+
+- ./quaternions
+
+
+While the simulation runs, you can rotate the object by clicking and moving the mouse. Pressing **s** on your keyboard toggles
+between moving the camera or the object.
+
 # License
 
 Excerpt from the LICENSE file:
