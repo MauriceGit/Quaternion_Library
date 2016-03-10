@@ -242,7 +242,7 @@ void setQuaternionMovement (int x,int y)
 {
     int i;
     /* Quaternion der Drehachse */
-    Quaternion q;// = malloc (sizeof (*q));
+    Quaternion q;
     /* Drehachse */
     Vector3D a = {100.9, -35.0, 3.0};
     /* Winkel */
@@ -271,8 +271,8 @@ void setQuaternionMovement (int x,int y)
     for (i=0;i<G_ObjectSize; i++)
     {
         /* Quaternion des Punktes */
-        Quaternion p;// = malloc(sizeof(*p));
-        Quaternion qtmp;// = malloc(sizeof(*qtmp));
+        Quaternion p;
+        Quaternion qtmp;
         Quaternion res;
         Quaternion res2;
         Quaternion inverseQ;
@@ -297,12 +297,7 @@ void setQuaternionMovement (int x,int y)
         G_Object[i][1] = res2.v[1];
         G_Object[i][2] = res2.v[2];
 
-        //free(res);
-        //free(res2);
-        //free(p);
-        //free(qtmp);
     }
-    //free(q);
 
 }
 

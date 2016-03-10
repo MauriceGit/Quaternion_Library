@@ -78,7 +78,6 @@ double multiplyVectorVector_intern (const Vector3D a, const Vector3D b)
  */
 void multQuaterionQuaterion (const Quaternion* q1, const Quaternion* q2, Quaternion * res)
 {
-    //Quaternion res = malloc (sizeof(*res));
     Vector3D vres;
     Vector3D tmp;
 
@@ -94,8 +93,6 @@ void multQuaterionQuaterion (const Quaternion* q1, const Quaternion* q2, Quatern
     res->v[0] = vres[0];
     res->v[1] = vres[1];
     res->v[2] = vres[2];
-
-    //return res;
 }
 
 /**
@@ -120,14 +117,10 @@ void multQuaternionScalar (const Quaternion* q1, double s, Quaternion* res)
  */
 void addQuaternionQuaternion (const Quaternion* q1, const Quaternion* q2, Quaternion* res)
 {
-    //Quaternion res = malloc (sizeof(*res));
-
     res->s = q1->s + q2->s;
     res->v[0] = q1->v[0] + q2->v[0];
     res->v[1] = q1->v[1] + q2->v[1];
     res->v[2] = q1->v[2] + q2->v[2];
-
-    //return res;
 }
 
 /**
@@ -135,14 +128,10 @@ void addQuaternionQuaternion (const Quaternion* q1, const Quaternion* q2, Quater
  */
 void subtractQuaternionQuaternion (const Quaternion* q1, const Quaternion* q2, Quaternion* res)
 {
-    //Quaternion res = malloc (sizeof(*res));
-
     res->s = q1->s - q2->s;
     res->v[0] = q1->v[0] - q2->v[0];
     res->v[1] = q1->v[1] - q2->v[1];
     res->v[2] = q1->v[2] - q2->v[2];
-
-    //return res;
 }
 
 /**
@@ -153,8 +142,6 @@ void conjugateQuaternion (Quaternion* q1)
     q1->v[0] *= -1.0;
     q1->v[1] *= -1.0;
     q1->v[2] *= -1.0;
-
-    //return q1;
 }
 
 /**
@@ -182,8 +169,6 @@ void normQuaternion (Quaternion* q1)
     q1->v[0] /= qlen;
     q1->v[1] /= qlen;
     q1->v[2] /= qlen;
-
-    //return q1;
 }
 
 /**
