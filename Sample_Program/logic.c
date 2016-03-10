@@ -273,7 +273,8 @@ void setQuaternionMovement (int x,int y)
         /* Quaternion des Punktes */
         Quaternion p = malloc(sizeof(*p));
         Quaternion qtmp = malloc(sizeof(*qtmp));
-        Quaternion res = malloc(sizeof(*res));
+        Quaternion res;
+        Quaternion res2;
 
         p->s = 0.0;
         p->v[0] = G_Object[i][0];
@@ -288,17 +289,19 @@ void setQuaternionMovement (int x,int y)
         /*  ---  q p q*  ---  */
         res = multQuaterionQuaterion (qtmp, p);
 
-        res = multQuaterionQuaterion (res, inverseQuaternion (qtmp));
+        res2 = multQuaterionQuaterion (res, inverseQuaternion (qtmp));
 
         /* Ergebnis zurück schreiben */
-        G_Object[i][0] = res->v[0];
-        G_Object[i][1] = res->v[1];
-        G_Object[i][2] = res->v[2];
+        G_Object[i][0] = res2->v[0];
+        G_Object[i][1] = res2->v[1];
+        G_Object[i][2] = res2->v[2];
 
         free(res);
+        free(res2);
         free(p);
         free(qtmp);
     }
+    free(q);
 
 }
 
