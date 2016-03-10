@@ -1,4 +1,4 @@
-# Quaternion_Library
+# Quaternion Library
 
 This repository is all about the files: **quaternions.h** and **quaternions.c**.
 
@@ -6,6 +6,9 @@ They represent an interface (library) of Quaternions and the most common operati
 
 Corresponding to the library, I wrote a small sample program, that rotates a simple geometry around a fixed axis
 with Quaternions. It is used for all calculations of the new rotated position.
+
+If you want to know how and why Quaternions work - please read it up on the internet. This is just a practical approach
+and the implementation of common operations.
 
 # Usage
 
