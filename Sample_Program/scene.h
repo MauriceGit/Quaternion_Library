@@ -25,7 +25,7 @@
 #include "types.h"
 
 void drawVertex(CGPoint3f p1, CGPoint3f p2, CGPoint3f p3, CGPoint3f p4, int color);
-void drawScene (void);
+void drawScene (GLuint tex);
 int initScene (void);
 void toggleWireframeMode (void);
 

@@ -23,7 +23,6 @@
 /* ---- Eigene Header einbinden ---- */
 #include "logic.h"
 #include "vector.h"
-#include "texture.h"
 #include "scene.h"
 #include "types.h"
 #include "quaternions.h"
@@ -33,8 +32,6 @@
 InitType G_Light = ON;
 /** Hilfe an/aus */
 InitType G_Help  = OFF;
-/** Textur an/aus */
-InitType G_Texture = ON;
 /** Mausbewegung zoom/move/none */
 MouseInterpretType G_Mouse;
 /** Kameraposition */
@@ -45,8 +42,6 @@ Movement G_MouseMove = {0.0,0.0,0.0};
 CGVector3D G_LastMouseCenter = {0.0,0.0,0.0};
 /** Anzahl der Quadrate für den Boden */
 int G_QuadCount = 5;
-/** Welche Textur soll angezeigt werden */
-int G_TextureCount = 5;
 /** Partikel hinzufügen? */
 int G_UpDownKeys[2] = {0,0};
 /** FPS */
@@ -75,7 +70,7 @@ MouseType G_MouseType;
 
 int isCameraMode (void)
 {
-	return G_MouseType == camera;
+    return G_MouseType == camera;
 }
 
 /**
@@ -84,24 +79,24 @@ int isCameraMode (void)
  */
 void toggleMouseAction (void)
 {
-	G_MouseType = (G_MouseType == camera) ? quaternion : camera;
-	printf("Mouse type set to: ");
-	printf ("%s\n", (G_MouseType == quaternion) ? "Quaternion" : "Camera");
+    G_MouseType = (G_MouseType == camera) ? quaternion : camera;
+    printf("Mouse type set to: ");
+    printf ("%s\n", (G_MouseType == quaternion) ? "Quaternion" : "Camera");
 }
 
 int getFPS(void)
 {
-	return G_FPS;
+    return G_FPS;
 }
 
 int getObjectIndicesCount(void)
 {
-	return G_IndicesCount;
+    return G_IndicesCount;
 }
 
 GLuint * getObjectIndices(void)
 {
-	return G_Indices;
+    return G_Indices;
 }
 
 /**
@@ -134,7 +129,7 @@ void setLightStatus(InitType state) {
 
 void toggleLight (void)
 {
-	G_Light = !G_Light;
+    G_Light = !G_Light;
 }
 
 /**
@@ -153,21 +148,6 @@ void setHelpStatus(InitType state) {
     G_Help = state;
 }
 
-/**
- * Get-Function für den Status der Texturen
- * @return Status der Texturen
- */
-InitType getTextureStatus() {
-    return G_Texture;
-}
-
-/**
- * Set-Function für den Status der Textur
- * @param Status der Textur
- */
-void setTextureStatus(InitType state) {
-    G_Texture = state;
-}
 
 /**
  * Set-Function für den Status der Maus
@@ -178,8 +158,8 @@ void setMouseEvent(MouseInterpretType state,int x, int y) {
     G_MouseMove[2] = 0.0;
     G_LastMouseCenter[0] = x;
     G_LastMouseCenter[2] = y;
-    
-    
+
+
     G_Mouse = state;
 }
 
@@ -198,26 +178,10 @@ double getCameraPosition (int axis)
 {
     if (axis >= 0 && axis < 3)
         return G_CameraPosition[axis];
-        
+
     return 0.0;
 }
 
-/**
- * Getter für die aktuelle Textur
- */
-int getTextureCount() {
-    return G_TextureCount;
-}
-
-/**
- * Setzt die Textur weiter 
- */
-void nextTexture() {
-    if (G_TextureCount < TEX_COUNT)
-        ++G_TextureCount;
-    else
-        G_TextureCount = 0;
-}
 
 /**
  * Erhöht die Größe der Unterteilungen um den Faktor 2
@@ -247,28 +211,28 @@ int getQuadCount() {
  */
 void setCameraMovement(int x,int y)
 {
-	CGVector3D tmp;
-	double factor, radius = vectorLength3D(G_CameraPosition);
-	
-	tmp[0] = G_CameraPosition[0];
-	tmp[1] = G_CameraPosition[1];
-	tmp[2] = G_CameraPosition[2];
-	
-	G_MouseMove[0] = x-G_LastMouseCenter[0];
-	G_MouseMove[2] = y-G_LastMouseCenter[2];
-	
-	G_LastMouseCenter[0] = x;
-	G_LastMouseCenter[2] = y;
-	
-	/* Bewegung um Y-Achse: */
-	G_CameraPosition[0] = cos(-G_MouseMove[0]*PI/180.0/CAMERA_MOVEMENT_SPEED)*tmp[0] + sin(-G_MouseMove[0]*PI/180.0/CAMERA_MOVEMENT_SPEED)*tmp[2];
-	G_CameraPosition[2] = -sin(-G_MouseMove[0]*PI/180.0/CAMERA_MOVEMENT_SPEED)*tmp[0] + cos(-G_MouseMove[0]*PI/180.0/CAMERA_MOVEMENT_SPEED)*tmp[2];
-	
-	/* Bewegung oben/unten */
-	G_CameraPosition[1] += G_MouseMove[2]/(CAMERA_MOVEMENT_SPEED/2)*(vectorLength3D(G_CameraPosition)/100.0);
-	factor = 1.0 / (vectorLength3D(G_CameraPosition) / radius);
-	multiplyVectorScalar (G_CameraPosition, factor, &G_CameraPosition);
-		
+    CGVector3D tmp;
+    double factor, radius = vectorLength3D(G_CameraPosition);
+
+    tmp[0] = G_CameraPosition[0];
+    tmp[1] = G_CameraPosition[1];
+    tmp[2] = G_CameraPosition[2];
+
+    G_MouseMove[0] = x-G_LastMouseCenter[0];
+    G_MouseMove[2] = y-G_LastMouseCenter[2];
+
+    G_LastMouseCenter[0] = x;
+    G_LastMouseCenter[2] = y;
+
+    /* Bewegung um Y-Achse: */
+    G_CameraPosition[0] = cos(-G_MouseMove[0]*PI/180.0/CAMERA_MOVEMENT_SPEED)*tmp[0] + sin(-G_MouseMove[0]*PI/180.0/CAMERA_MOVEMENT_SPEED)*tmp[2];
+    G_CameraPosition[2] = -sin(-G_MouseMove[0]*PI/180.0/CAMERA_MOVEMENT_SPEED)*tmp[0] + cos(-G_MouseMove[0]*PI/180.0/CAMERA_MOVEMENT_SPEED)*tmp[2];
+
+    /* Bewegung oben/unten */
+    G_CameraPosition[1] += G_MouseMove[2]/(CAMERA_MOVEMENT_SPEED/2)*(vectorLength3D(G_CameraPosition)/100.0);
+    factor = 1.0 / (vectorLength3D(G_CameraPosition) / radius);
+    multiplyVectorScalar (G_CameraPosition, factor, &G_CameraPosition);
+
 }
 
 /**
@@ -276,68 +240,68 @@ void setCameraMovement(int x,int y)
  */
 void setQuaternionMovement (int x,int y)
 {
-	int i;
-	/* Quaternion der Drehachse */
-	Quaternion q = malloc (sizeof (*q));
-	/* Drehachse */
-	CGVector3D a;
-	/* Winkel */
-	double angle;
-	
-	a[0] = 100.9;
-	a[1] = -35.0;
-	a[2] = 3.0;
-	normVector3D (a);
-	
-	G_QuaternionMove[0] = x-G_LastQuaternionCenter[0];
-	G_QuaternionMove[2] = y-G_LastQuaternionCenter[2];
-	
-	G_LastQuaternionCenter[0] = x;
-	G_LastQuaternionCenter[2] = y;
-	
-	angle = G_QuaternionMove[0]*PI/180.0/QUATERNION_MOVEMENT_SPEED;
-	/*printf("angle : %f\n", angle/PI*180.0);*/
-	
-	q->s = cos (angle/2.0);
-	multiplyVectorScalar (a, sin(angle/2.0), &a);
-	/* Random Drehachse^^ */
-	q->v[0] = a[0];
-	q->v[1] = a[1];
-	q->v[2] = a[2];
-	
-	normQuaternion(q);
-	
-	for (i=0;i<G_ObjectSize; i++)
-	{
-		/* Quaternion des Punktes */
-		Quaternion p = malloc(sizeof(*p));
-		Quaternion qtmp = malloc(sizeof(*qtmp));
-		Quaternion res = malloc(sizeof(*res));
-		
-		p->s = 0.0;
-		p->v[0] = G_Object[i][0];
-		p->v[1] = G_Object[i][1];
-		p->v[2] = G_Object[i][2];
-		
-		qtmp->s = q->s;
-		qtmp->v[0] = q->v[0];
-		qtmp->v[1] = q->v[1];
-		qtmp->v[2] = q->v[2];
-		
-		/*  ---  q p q*  ---  */
-		res = multQuaterionQuaterion (qtmp, p);
-		
-		res = multQuaterionQuaterion (res, inverseQuaternion (qtmp));
-		
-		/* Ergebnis zurück schreiben */
-		G_Object[i][0] = res->v[0];
-		G_Object[i][1] = res->v[1];
-		G_Object[i][2] = res->v[2];
-		
-		free(res);
-		free(p);
-		free(qtmp);
-	}
+    int i;
+    /* Quaternion der Drehachse */
+    Quaternion q = malloc (sizeof (*q));
+    /* Drehachse */
+    CGVector3D a;
+    /* Winkel */
+    double angle;
+
+    a[0] = 100.9;
+    a[1] = -35.0;
+    a[2] = 3.0;
+    normVector3D (a);
+
+    G_QuaternionMove[0] = x-G_LastQuaternionCenter[0];
+    G_QuaternionMove[2] = y-G_LastQuaternionCenter[2];
+
+    G_LastQuaternionCenter[0] = x;
+    G_LastQuaternionCenter[2] = y;
+
+    angle = G_QuaternionMove[0]*PI/180.0/QUATERNION_MOVEMENT_SPEED;
+    /*printf("angle : %f\n", angle/PI*180.0);*/
+
+    q->s = cos (angle/2.0);
+    multiplyVectorScalar (a, sin(angle/2.0), &a);
+    /* Random Drehachse^^ */
+    q->v[0] = a[0];
+    q->v[1] = a[1];
+    q->v[2] = a[2];
+
+    normQuaternion(q);
+
+    for (i=0;i<G_ObjectSize; i++)
+    {
+        /* Quaternion des Punktes */
+        Quaternion p = malloc(sizeof(*p));
+        Quaternion qtmp = malloc(sizeof(*qtmp));
+        Quaternion res = malloc(sizeof(*res));
+
+        p->s = 0.0;
+        p->v[0] = G_Object[i][0];
+        p->v[1] = G_Object[i][1];
+        p->v[2] = G_Object[i][2];
+
+        qtmp->s = q->s;
+        qtmp->v[0] = q->v[0];
+        qtmp->v[1] = q->v[1];
+        qtmp->v[2] = q->v[2];
+
+        /*  ---  q p q*  ---  */
+        res = multQuaterionQuaterion (qtmp, p);
+
+        res = multQuaterionQuaterion (res, inverseQuaternion (qtmp));
+
+        /* Ergebnis zurück schreiben */
+        G_Object[i][0] = res->v[0];
+        G_Object[i][1] = res->v[1];
+        G_Object[i][2] = res->v[2];
+
+        free(res);
+        free(p);
+        free(qtmp);
+    }
 
 }
 
@@ -346,17 +310,17 @@ void setQuaternionMovement (int x,int y)
  */
 void setCameraZoom(int x,int y)
 {
-	double factor = 1.0 + (CAMERA_ZOOM_SPEED / 1000.0) * ((G_MouseMove[2] < 0.0) ? -1.0 : 1.0);
-	
-	G_MouseMove[0] = x-G_LastMouseCenter[0];
-	G_MouseMove[2] = y-G_LastMouseCenter[2];
-	
-	G_LastMouseCenter[0] = x;
-	G_LastMouseCenter[2] = y;
-	
-	G_CameraPosition[0] *= factor;
-	G_CameraPosition[1] *= factor;
-	G_CameraPosition[2] *= factor;
+    double factor = 1.0 + (CAMERA_ZOOM_SPEED / 1000.0) * ((G_MouseMove[2] < 0.0) ? -1.0 : 1.0);
+
+    G_MouseMove[0] = x-G_LastMouseCenter[0];
+    G_MouseMove[2] = y-G_LastMouseCenter[2];
+
+    G_LastMouseCenter[0] = x;
+    G_LastMouseCenter[2] = y;
+
+    G_CameraPosition[0] *= factor;
+    G_CameraPosition[1] *= factor;
+    G_CameraPosition[2] *= factor;
 }
 
 /* ------- BERECHNUNGEN ------- */
@@ -367,15 +331,15 @@ void setCameraZoom(int x,int y)
  */
 void calcTimeRelatedStuff (double interval)
 {
-    
+
 
     G_Counter += interval;
-    
+
     if (G_Counter >= 1.0)
-		G_Counter = 0.0 -EPS;
-    
+        G_Counter = 0.0 -EPS;
+
     if (G_Counter <= 0.0)
-		G_FPS = (int) 1.0/interval;
+        G_FPS = (int) 1.0/interval;
 }
 
 /**
@@ -383,7 +347,7 @@ void calcTimeRelatedStuff (double interval)
  * @param p1,p2,p3,p4 - Die Ecken des Quadrats
  * @param rek - Rekursionstiefe
  * @param color - die Farbe der Quadrate
- * 
+ *
  */
 void drawRecursiveQuad(CGPoint3f p1, CGPoint3f p2, CGPoint3f p3, CGPoint3f p4, int rek, int color)
 {
@@ -439,48 +403,48 @@ void initCameraPosition ()
  */
 void initObject (void)
 {
-	G_ObjectSize = 4;
-	
-	G_Object = malloc (G_ObjectSize * sizeof (Vertex));
-	
-	G_IndicesCount = 12;
-	
-	G_Indices = malloc (G_IndicesCount * sizeof(GLuint));
-	
-	G_Object[0][0] = 0.0;
-	G_Object[0][1] = 0.0;
-	G_Object[0][2] = 0.0;
-	
-	G_Object[1][0] = 20.0;
-	G_Object[1][1] = 0.0;
-	G_Object[1][2] = 0.0;
-	
-	G_Object[2][0] = 10.0;
-	G_Object[2][1] = 0.0;
-	G_Object[2][2] = -20.0;
-	
-	G_Object[3][0] = 10.0;
-	G_Object[3][1] = 20.0;
-	G_Object[3][2] = 20.0;
-	
-	G_Indices[0] = 0;
-	G_Indices[1] = 1;
-	G_Indices[2] = 3;
-	
-	G_Indices[3] = 0;
-	G_Indices[4] = 3;
-	G_Indices[5] = 2;
-	
-	G_Indices[6] = 1;
-	G_Indices[7] = 2;
-	G_Indices[8] = 3;
-	
-	G_Indices[9] = 1;
-	G_Indices[10] = 0;
-	G_Indices[11] = 2;
+    G_ObjectSize = 4;
 
-	glVertexPointer(3,           
-                GL_DOUBLE,           
+    G_Object = malloc (G_ObjectSize * sizeof (Vertex));
+
+    G_IndicesCount = 12;
+
+    G_Indices = malloc (G_IndicesCount * sizeof(GLuint));
+
+    G_Object[0][0] = 0.0;
+    G_Object[0][1] = 0.0;
+    G_Object[0][2] = 0.0;
+
+    G_Object[1][0] = 20.0;
+    G_Object[1][1] = 0.0;
+    G_Object[1][2] = 0.0;
+
+    G_Object[2][0] = 10.0;
+    G_Object[2][1] = 0.0;
+    G_Object[2][2] = -20.0;
+
+    G_Object[3][0] = 10.0;
+    G_Object[3][1] = 20.0;
+    G_Object[3][2] = 20.0;
+
+    G_Indices[0] = 0;
+    G_Indices[1] = 1;
+    G_Indices[2] = 3;
+
+    G_Indices[3] = 0;
+    G_Indices[4] = 3;
+    G_Indices[5] = 2;
+
+    G_Indices[6] = 1;
+    G_Indices[7] = 2;
+    G_Indices[8] = 3;
+
+    G_Indices[9] = 1;
+    G_Indices[10] = 0;
+    G_Indices[11] = 2;
+
+    glVertexPointer(3,
+                GL_DOUBLE,
                 0,
                 &(G_Object[0][0]));
 }
@@ -490,10 +454,10 @@ void initObject (void)
  * Inklusive der Datenhaltung und des SPIEelfeldes.
  */
 void initGame ()
-{   
+{
     initCameraPosition();
-    
+
     initObject ();
-    
+
 }
 

@@ -22,13 +22,13 @@
 #include "io.h"
 #include "scene.h"
 #include "logic.h"
-#include "texture.h"
 #include "vector.h"
+#include "imageLoader.h"
 
 /* ---- Eigene Funktionen ---- */
 
 
-
+GLuint G_TexImageRocks;
 
 /**
  * Timer-Callback.
@@ -40,20 +40,20 @@
 static void
 cbTimer (int lastCallTime)
 {
-	/* Seit dem Programmstart vergangene Zeit in Millisekunden */
-	int thisCallTime = glutGet (GLUT_ELAPSED_TIME);
-    
-	/* Seit dem letzten Funktionsaufruf vergangene Zeit in Sekunden */
-	double interval = (double) (thisCallTime - lastCallTime) / 1000.0f;
-		
-	calcTimeRelatedStuff(interval);
-			
-	/* Wieder als Timer-Funktion registrieren */
-	glutTimerFunc (1000 / TIMER_CALLS_PS, cbTimer, thisCallTime);
+    /* Seit dem Programmstart vergangene Zeit in Millisekunden */
+    int thisCallTime = glutGet (GLUT_ELAPSED_TIME);
 
-	/* Neuzeichnen anstossen */
-	glutPostRedisplay ();
-    
+    /* Seit dem letzten Funktionsaufruf vergangene Zeit in Sekunden */
+    double interval = (double) (thisCallTime - lastCallTime) / 1000.0f;
+
+    calcTimeRelatedStuff(interval);
+
+    /* Wieder als Timer-Funktion registrieren */
+    glutTimerFunc (1000 / TIMER_CALLS_PS, cbTimer, thisCallTime);
+
+    /* Neuzeichnen anstossen */
+    glutPostRedisplay ();
+
 }
 
 
@@ -72,15 +72,15 @@ cbDisplay (void)
   glMatrixMode (GL_MODELVIEW);
   /* Matrix zuruecksetzen - Einheitsmatrix laden */
   glLoadIdentity ();
-  
+
   /* Kameraposition */
         gluLookAt (getCameraPosition(0), getCameraPosition(1), getCameraPosition(2),
                  0.0, 0.0, 0.0,
                  0.0, 1.0, 0.0);
-    
-    
+
+
   /* Szene zeichnen */
-  drawScene ();
+  drawScene (G_TexImageRocks);
 
   /* Objekt anzeigen */
   /* glFlush (); *//* fuer SingleBuffering */
@@ -96,19 +96,19 @@ cbDisplay (void)
  */
 void cbKeyboard (unsigned char key, int x, int y)
 {
-	
-	switch (key)
-	{
-		case 'q':
-		case 'Q':
-		case ESC:
-			exit (0);
-			break;
-		case 'r':
+
+    switch (key)
+    {
+        case 'q':
+        case 'Q':
+        case ESC:
+            exit (0);
+            break;
+        case 'r':
         case 'R':
-			initGame ();
-			break;
-		case 'h':
+            initGame ();
+            break;
+        case 'h':
         case 'H':
             setHelpStatus(!getHelpStatus());
             break;
@@ -119,43 +119,42 @@ void cbKeyboard (unsigned char key, int x, int y)
             decQuadCount();
             break;
         case 'n':
-		case 'N':
+        case 'N':
             break;
         case 'm':
-		case 'M':
-			break;
-		case 't':
-        case 'T':
-            nextTexture();
+        case 'M':
             break;
-		case 'p':
+        case 't':
+        case 'T':
+            break;
+        case 'p':
         case 'P':
             break;
-		case 'f':
+        case 'f':
         case 'F':
             break;
-		case 'b':
-            break;       
+        case 'b':
+            break;
         case 'B':
             break;
         case 's':
         case 'S':
-			toggleMouseAction ();
-            break;    
+            toggleMouseAction ();
+            break;
         case 'k':
         case 'K':
-            break;   
+            break;
         case 'v':
         case 'V':
-            break;    
+            break;
         case 'x':
         case 'X':
-            break;    
+            break;
         case 'y':
         case 'Y':
-            break;      
-            
-	}	
+            break;
+
+    }
 }
 
 /* Spezialtasten-Druck-Callback - wird ausgefuehrt, wenn Spezialtaste
@@ -163,29 +162,26 @@ void cbKeyboard (unsigned char key, int x, int y)
 * Einfuegen) gedrueckt wird */
 void cbSpecial (int key, int x, int y)
 {
-	switch (key)
-	{
-        case GLUT_KEY_LEFT: 
+    switch (key)
+    {
+        case GLUT_KEY_LEFT:
 
-			break;
-		case GLUT_KEY_RIGHT:
+            break;
+        case GLUT_KEY_RIGHT:
 
-			break;
-		case GLUT_KEY_UP:
+            break;
+        case GLUT_KEY_UP:
             setKey (1, 1);
-			break;
-		case GLUT_KEY_DOWN:
+            break;
+        case GLUT_KEY_DOWN:
             setKey(0,1);
-			break;
-		case GLUT_KEY_F1:
+            break;
+        case GLUT_KEY_F1:
             toggleWireframeMode();
-			break;
+            break;
         case GLUT_KEY_F2:
             setLightStatus(!getLightStatus());
             break;
-		case GLUT_KEY_F3:
-            setTextureStatus(!getTextureStatus());
-			break;
         case GLUT_KEY_F4:
 
             break;
@@ -201,27 +197,27 @@ void cbSpecial (int key, int x, int y)
         case GLUT_KEY_F8:
 
             break;
-	}
+    }
 }
 
 /* Wird aufgerufen, wenn eine Spezialtaste wieder losgelassen wird1 */
 void cbUpSpecial (int key, int x, int y)
 {
-	switch (key)
-	{
-		case GLUT_KEY_LEFT: 
+    switch (key)
+    {
+        case GLUT_KEY_LEFT:
 
-			break;
-		case GLUT_KEY_RIGHT:
+            break;
+        case GLUT_KEY_RIGHT:
 
-			break;
-		case GLUT_KEY_UP:
+            break;
+        case GLUT_KEY_UP:
             setKey (1,0);
-			break;
-		case GLUT_KEY_DOWN:
+            break;
+        case GLUT_KEY_DOWN:
             setKey (0,0);
-			break;
-	}
+            break;
+    }
 }
 
 /**
@@ -272,20 +268,20 @@ handleMouseEvent (int x, int y, CGMouseEventType eventType, int button, int butt
 static void
 cbMouseButton (int button, int state, int x, int y)
 {
-	handleMouseEvent (x, y, mouseButton, button, state);
+    handleMouseEvent (x, y, mouseButton, button, state);
 }
 
-void mouseMovement(int x, int y) 
+void mouseMovement(int x, int y)
 {
-    
+
     if (getMouseEvent() == MOVE)
     {
-		if (isCameraMode())
-			setCameraMovement(x,y);
-		else
-			setQuaternionMovement (x,y);
-	}
-	
+        if (isCameraMode())
+            setCameraMovement(x,y);
+        else
+            setQuaternionMovement (x,y);
+    }
+
     if (getMouseEvent() == ZOOM)
         setCameraZoom(x,y);
 }
@@ -306,8 +302,8 @@ setProjection (GLdouble aspect)
   glMatrixMode (GL_PROJECTION);
   /* Matrix zuruecksetzen - Einheitsmatrix laden */
   glLoadIdentity ();
-    
-    
+
+
   {
       /* perspektivische Projektion */
       gluPerspective (90.0,     /* Oeffnungswinkel */
@@ -341,43 +337,66 @@ static void registerCallBacks (void)
     /* Mouse-Button-Callback (wird ausgefuehrt, wenn eine Maustaste
      *  gedrueckt oder losgelassen wird) */
     glutMouseFunc (cbMouseButton);
-    
+
     glutMotionFunc(mouseMovement);
-	
-	/* Timer-Callback - wird einmalig nach msescs Millisekunden ausgefuehrt */
-	glutTimerFunc (1000 / TIMER_CALLS_PS, /* msecs - bis Aufruf von func */
+
+    /* Timer-Callback - wird einmalig nach msescs Millisekunden ausgefuehrt */
+    glutTimerFunc (1000 / TIMER_CALLS_PS, /* msecs - bis Aufruf von func */
                  cbTimer,       /* func  - wird aufgerufen    */
                  glutGet (GLUT_ELAPSED_TIME));  /* value - Parameter, mit dem
                                                    func aufgerufen wird */
 
-	/* Reshape-Callback - wird ausgefuehrt, wenn neu gezeichnet wird (z.B. nach
-	* Erzeugen oder Groessenaenderungen des Fensters) */
-	glutReshapeFunc (cbReshape);
+    /* Reshape-Callback - wird ausgefuehrt, wenn neu gezeichnet wird (z.B. nach
+    * Erzeugen oder Groessenaenderungen des Fensters) */
+    glutReshapeFunc (cbReshape);
 
-	/* Display-Callback - wird an mehreren Stellen imlizit (z.B. im Anschluss an
-	* Reshape-Callback) oder explizit (durch glutPostRedisplay) angestossen */
-	glutDisplayFunc (cbDisplay);
-	
-	/* Tasten-Druck-Callback - wird ausgefuehrt, wenn eine Taste gedrueckt wird */
-	glutKeyboardFunc (cbKeyboard);
-	
-	/* Spezialtasten-Druck-Callback - wird ausgefuehrt, wenn Spezialtaste
-	* (F1 - F12, Links, Rechts, Oben, Unten, Bild-Auf, Bild-Ab, Pos1, Ende oder
-	* Einfuegen) gedrueckt wird */
-	glutSpecialFunc (cbSpecial);
-	
+    /* Display-Callback - wird an mehreren Stellen imlizit (z.B. im Anschluss an
+    * Reshape-Callback) oder explizit (durch glutPostRedisplay) angestossen */
+    glutDisplayFunc (cbDisplay);
+
+    /* Tasten-Druck-Callback - wird ausgefuehrt, wenn eine Taste gedrueckt wird */
+    glutKeyboardFunc (cbKeyboard);
+
+    /* Spezialtasten-Druck-Callback - wird ausgefuehrt, wenn Spezialtaste
+    * (F1 - F12, Links, Rechts, Oben, Unten, Bild-Auf, Bild-Ab, Pos1, Ende oder
+    * Einfuegen) gedrueckt wird */
+    glutSpecialFunc (cbSpecial);
+
     /* Wird aufgerufen, wenn eine Taste wieder losgelassen wird! */
-	glutSpecialUpFunc(cbUpSpecial);
-    
-	/* Automat. Tastendruckwiederholung ignorieren */
-	glutIgnoreKeyRepeat (1);
-    
+    glutSpecialUpFunc(cbUpSpecial);
+
+    /* Automat. Tastendruckwiederholung ignorieren */
+    glutIgnoreKeyRepeat (1);
+
     /* Wenn die Fenstergröße verändert wird. */
     /*glutReshapeFunc(cgReshape);*/
 }
 
 
+int loadTextureImage(Image * image, char * name, GLuint * tex) {
 
+    /**
+     * Load image-file
+     */
+    if (!imageLoad(name, image))
+    {
+        printf("Error reading image file");
+        exit(1);
+    }
+
+    /**
+     * Create Texture-object with the given identifier
+     */
+    glGenTextures(1, tex);
+    glBindTexture(GL_TEXTURE_2D, *tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    /** Create texture with the data from the image */
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image->sizeX, image->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
+}
 
 /**
  * Initialisiert das Programm (inkl. I/O und OpenGL) und startet die
@@ -389,48 +408,46 @@ static void registerCallBacks (void)
  */
 int initAndStartIO (char *title, int width, int height)
 {
-	int windowID = 0;
-	
-	/* Kommandozeile immitieren */
-	int argc = 1;
-	char *argv = "cmd";
+    int windowID = 0;
 
-	/* Glut initialisieren */
-	glutInit (&argc, &argv);
-	
-	/* FensterInitialisierung */
-	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	/* FensterGröße */
-	glutInitWindowSize (width, height);
-	/* FensterPosition */
-	glutInitWindowPosition (0, 0);
-	
-	windowID = glutCreateWindow (title);
-	
-	if (windowID)
-	{
-		/* Hintergrund und so werden initialisiert (Farben) */
-		if (initScene ())
-		{
-            /* Texturen laden hat geklappt*/
-            if (initTextures ())
-            { 
-                /* CallBack zum Malen und die Zeit dazwischen... */
-                registerCallBacks ();
-                /* Die Endlosschleife wird angestoßen */
-                glutMainLoop ();
-            }
-            else
-            {
-                glutDestroyWindow (windowID);
-                windowID = 0;
-            }
-		} 
-		else
-		{
-			glutDestroyWindow (windowID);
-			windowID = 0;
-		}
-	}
-	return windowID;
+    /* Kommandozeile immitieren */
+    int argc = 1;
+    char *argv = "cmd";
+
+    /* Glut initialisieren */
+    glutInit (&argc, &argv);
+
+    /* FensterInitialisierung */
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    /* FensterGröße */
+    glutInitWindowSize (width, height);
+    /* FensterPosition */
+    glutInitWindowPosition (0, 0);
+
+    windowID = glutCreateWindow (title);
+
+    if (windowID)
+    {
+        /* Hintergrund und so werden initialisiert (Farben) */
+        if (initScene ())
+        {
+
+            Image * imageRocks;
+            imageRocks = malloc(sizeof(Image));
+            loadTextureImage(imageRocks, "rocks.bmp", &G_TexImageRocks);
+
+
+
+            /* CallBack zum Malen und die Zeit dazwischen... */
+            registerCallBacks ();
+            /* Die Endlosschleife wird angestoßen */
+            glutMainLoop ();
+        }
+        else
+        {
+            glutDestroyWindow (windowID);
+            windowID = 0;
+        }
+    }
+    return windowID;
 }
