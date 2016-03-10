@@ -242,7 +242,7 @@ void setQuaternionMovement (int x,int y)
 {
     int i;
     /* Quaternion der Drehachse */
-    Quaternion q = malloc (sizeof (*q));
+    Quaternion q;// = malloc (sizeof (*q));
     /* Drehachse */
     Vector3D a = {100.9, -35.0, 3.0};
     /* Winkel */
@@ -259,49 +259,50 @@ void setQuaternionMovement (int x,int y)
     angle = G_QuaternionMove[0]*PI/180.0/QUATERNION_MOVEMENT_SPEED;
 
 
-    q->s = cos (angle/2.0);
+    q.s = cos (angle/2.0);
     multiplyVectorScalar (a, sin(angle/2.0), &a);
     /* Random Drehachse^^ */
-    q->v[0] = a[0];
-    q->v[1] = a[1];
-    q->v[2] = a[2];
+    q.v[0] = a[0];
+    q.v[1] = a[1];
+    q.v[2] = a[2];
 
-    normQuaternion(q);
+    normQuaternion(&q);
 
     for (i=0;i<G_ObjectSize; i++)
     {
         /* Quaternion des Punktes */
-        Quaternion p = malloc(sizeof(*p));
-        Quaternion qtmp = malloc(sizeof(*qtmp));
+        Quaternion p;// = malloc(sizeof(*p));
+        Quaternion qtmp;// = malloc(sizeof(*qtmp));
         Quaternion res;
         Quaternion res2;
+        Quaternion inverseQ;
 
-        p->s = 0.0;
-        p->v[0] = G_Object[i][0];
-        p->v[1] = G_Object[i][1];
-        p->v[2] = G_Object[i][2];
+        p.s = 0.0;
+        p.v[0] = G_Object[i][0];
+        p.v[1] = G_Object[i][1];
+        p.v[2] = G_Object[i][2];
 
-        qtmp->s = q->s;
-        qtmp->v[0] = q->v[0];
-        qtmp->v[1] = q->v[1];
-        qtmp->v[2] = q->v[2];
+        qtmp.s = q.s;
+        qtmp.v[0] = q.v[0];
+        qtmp.v[1] = q.v[1];
+        qtmp.v[2] = q.v[2];
 
         /*  ---  q p q*  ---  */
-        res = multQuaterionQuaterion (qtmp, p);
-
-        res2 = multQuaterionQuaterion (res, inverseQuaternion (qtmp));
+        multQuaterionQuaterion (&qtmp, &p, &res);
+        inverseQuaternion(&qtmp, &inverseQ);
+        multQuaterionQuaterion (&res, &inverseQ, &res2);
 
         /* Ergebnis zurück schreiben */
-        G_Object[i][0] = res2->v[0];
-        G_Object[i][1] = res2->v[1];
-        G_Object[i][2] = res2->v[2];
+        G_Object[i][0] = res2.v[0];
+        G_Object[i][1] = res2.v[1];
+        G_Object[i][2] = res2.v[2];
 
-        free(res);
-        free(res2);
-        free(p);
-        free(qtmp);
+        //free(res);
+        //free(res2);
+        //free(p);
+        //free(qtmp);
     }
-    free(q);
+    //free(q);
 
 }
 

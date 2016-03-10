@@ -17,25 +17,25 @@ typedef struct
 {
     double s;
     Vector3D v;
-} * Quaternion;
+} Quaternion;
 
-Quaternion multQuaterionQuaterion (Quaternion q1, Quaternion q2);
+void multQuaterionQuaterion (const Quaternion* q1, const Quaternion* q2, Quaternion * res);
 
-Quaternion multQuaterionScalar (Quaternion q1, double s);
+void multQuaternionScalar (const Quaternion* q1, double s, Quaternion* res);
 
-Quaternion addQuaternionQuaternion (Quaternion q1, Quaternion q2);
+void addQuaternionQuaternion (const Quaternion* q1, const Quaternion* q2, Quaternion* res);
 
-Quaternion subtractQuaternionQuaternion (Quaternion q1, Quaternion q2);
+void subtractQuaternionQuaternion (const Quaternion* q1, const Quaternion* q2, Quaternion* res);
 
-Quaternion conjugateQuaternion (Quaternion q1);
+void conjugateQuaternion (Quaternion* q1);
 
-Quaternion inverseQuaternion (Quaternion q1);
+void inverseQuaternion (const Quaternion* q1, Quaternion* res);
 
-Quaternion normQuaternion (Quaternion q1);
+void normQuaternion (Quaternion* q1);
 
-double lengthQuaternion (Quaternion q1);
+double lengthQuaternion (const Quaternion* q1);
 
-int isNormQuaternion (Quaternion q1);
+int isNormQuaternion (const Quaternion* q1);
 
 
 
