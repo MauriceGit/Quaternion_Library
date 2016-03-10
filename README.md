@@ -26,7 +26,7 @@ double angle = 0.1;
 // define point to rotate
 Vector3D point = {35.0, -28.3, 5.9};
 // create Quaternion
-Quaternion q = malloc (sizeof (*q));
+Quaternion q;
 
 q->s = cos (angle/2.0);
 multiplyVectorScalar (a, sin(angle/2.0), &a);
@@ -34,13 +34,14 @@ q->v[0] = a[0];
 q->v[1] = a[1];
 q->v[2] = a[2];
 
-normQuaternion(q);
+normQuaternion(&q);
 
 // Create Quaternion of the point to rotate
-Quaternion p = malloc(sizeof(*p));
-Quaternion qtmp = malloc(sizeof(*qtmp));
+Quaternion p;
+Quaternion qtmp;
 Quaternion res;
-Quaternion res2;
+Quaternion inverseQ;
+
 p->s = 0.0;
 p->v[0] = point[0];
 p->v[1] = point[1];
@@ -53,20 +54,14 @@ qtmp->v[2] = q->v[2];
 
 // The actual calculations.
 //  ---  q p q*  ---
-res = multQuaterionQuaterion (qtmp, p);
-res2 = multQuaterionQuaterion (res, inverseQuaternion (qtmp));
+inverseQuaternion(&qtmp, &inverseQ);
+multQuaterionQuaterion (&qtmp, &p, &res);
+multQuaterionQuaterion (&res, &inverseQ, &res);
 
 // Write new rotated coordinates back to the point
-point[0] = res2->v[0];
-point[1] = res2->v[1];
-point[2] = res2->v[2];
-
-// Of course - free your memory!
-free(res);
-free(res2);
-free(p);
-free(q);
-free(qtmp);
+point[0] = res->v[0];
+point[1] = res->v[1];
+point[2] = res->v[2];
 ```
 
 # Compile and Run

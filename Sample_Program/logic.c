@@ -274,7 +274,6 @@ void setQuaternionMovement (int x,int y)
         Quaternion p;
         Quaternion qtmp;
         Quaternion res;
-        Quaternion res2;
         Quaternion inverseQ;
 
         p.s = 0.0;
@@ -288,14 +287,14 @@ void setQuaternionMovement (int x,int y)
         qtmp.v[2] = q.v[2];
 
         /*  ---  q p q*  ---  */
-        multQuaterionQuaterion (&qtmp, &p, &res);
         inverseQuaternion(&qtmp, &inverseQ);
-        multQuaterionQuaterion (&res, &inverseQ, &res2);
+        multQuaterionQuaterion (&qtmp, &p, &res);
+        multQuaterionQuaterion (&res, &inverseQ, &res);
 
         /* Ergebnis zurück schreiben */
-        G_Object[i][0] = res2.v[0];
-        G_Object[i][1] = res2.v[1];
-        G_Object[i][2] = res2.v[2];
+        G_Object[i][0] = res.v[0];
+        G_Object[i][1] = res.v[1];
+        G_Object[i][2] = res.v[2];
 
     }
 
