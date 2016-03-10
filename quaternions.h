@@ -9,33 +9,19 @@
  */
 
 /* ---- System Header einbinden ---- */
-#ifdef WIN32
-#include <windows.h>
-#endif
 
-#ifdef MACOSX
-#include <OpenGL/glu.h>
-#else
-#include <GL/glu.h>
-#endif
-
-#include <stdio.h>
 #include <stdarg.h>
 
-#include "types.h"
-#include "vector.h"
+#define EPS     0.0001
 
-#include "vector.h"
-
-#define QUATERNION_MOVEMENT_SPEED 	4.0
+typedef double Vector3D[3];
 
 /** Quaternion */
-typedef struct Y * Quaternion;
-struct Y
+typedef struct
 {
-	double s;
-	CGVector3D v;
-};
+    double s;
+    Vector3D v;
+} * Quaternion;
 
 Quaternion multQuaterionQuaterion (Quaternion q1, Quaternion q2);
 
