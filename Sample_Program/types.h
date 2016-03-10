@@ -29,7 +29,7 @@
 #define CAMERA_Z        60.0
 #define CAMERA_SPEED    15.0
 
-#define CAMERA_MOVEMENT_SPEED	4.0
+#define CAMERA_MOVEMENT_SPEED   4.0
 #define CAMERA_ZOOM_SPEED 10.0
 
 #define CAMERA_PARTICLE_DISTANCE    0.5
@@ -37,13 +37,13 @@
 #define COUNTOWNTEX 2
 #define WORLD_SIZE 300.0
 
-#define SLICE_CNT	10
+#define SLICE_CNT   10
 
+#define QUATERNION_MOVEMENT_SPEED   4.0
 
-
-#define E			2.71828183
-#define PI             3.14159265  
-#define EPS		0.0001
+#define E           2.71828183
+#define PI             3.14159265
+#define EPS     0.0001
 
 /** Anzahl der Aufrufe der Timer-Funktion pro Sekunde */
 #define TIMER_CALLS_PS      60
@@ -52,16 +52,16 @@
 #define IMAGE_ROWS  128
 #define IMAGE_COLS  128
 
-#define SPHERE_R	1.5
-#define SPHERE_TRANSPARENCY		0.3
-#define SPHERE_CNT	3
+#define SPHERE_R    1.5
+#define SPHERE_TRANSPARENCY     0.3
+#define SPHERE_CNT  3
 
 #define RED                     0.7, 0.0, 0.0
 #define BLUE                    0.0, 0.0, 0.7
 #define GREEN                   0.0, 0.7, 0.0
 #define BLACK                   0.0, 0.0, 0.0
 #define WHITE                   1.0, 1.0, 1.0
-#define GREY                    0.4, 0.4, 0.4 
+#define GREY                    0.4, 0.4, 0.4
 #define YELLOW                  0.7, 0.7, 0.0
 
 char * OWN_HELP_OUTPUT [14];
@@ -117,7 +117,7 @@ typedef double Vector4D[4];
 typedef Vector4D Punkt4D;
 
 /** Vektor im 3D-Raum */
-typedef GLfloat CGVector3D[3];
+typedef double CGVector3D[3];
 
 typedef double Vertex[3];
 

@@ -64,7 +64,7 @@ int G_IndicesCount = 0;
 /** Indices */
 GLuint * G_Indices;
 /** Mouse Action */
-MouseType G_MouseType;
+MouseType G_MouseType = quaternion;
 
 /* ------- GETTER / SETTER ------- */
 
@@ -260,7 +260,7 @@ void setQuaternionMovement (int x,int y)
     G_LastQuaternionCenter[2] = y;
 
     angle = G_QuaternionMove[0]*PI/180.0/QUATERNION_MOVEMENT_SPEED;
-    /*printf("angle : %f\n", angle/PI*180.0);*/
+
 
     q->s = cos (angle/2.0);
     multiplyVectorScalar (a, sin(angle/2.0), &a);
