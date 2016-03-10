@@ -76,7 +76,7 @@ double multiplyVectorVector_intern (const Vector3D a, const Vector3D b)
  * Careful! Not commutative!!!
  * Calculates: q1 * q2
  */
-void multQuaterionQuaterion (const Quaternion* q1, const Quaternion* q2, Quaternion * res)
+void multQuaternionQuaternion (const Quaternion* q1, const Quaternion* q2, Quaternion * res)
 {
     Vector3D vres;
     Vector3D tmp;
@@ -109,7 +109,7 @@ void multQuaternionScalar (const Quaternion* q1, double s, Quaternion* res)
     q2.v[1] = 0.0;
     q2.v[2] = 0.0;
 
-    multQuaterionQuaterion (q1, &q2, res);
+    multQuaternionQuaternion (q1, &q2, res);
 }
 
 /**
