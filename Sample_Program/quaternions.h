@@ -1,14 +1,10 @@
 #ifndef __QUATERNIONS_H__
 #define __QUATERNIONS_H__
-#define __DEBUG_GL_H__
 /**
- * @file
- * Programmlogik und Datenhaltung
+ * Interface for some operations on Quaternions.
  *
  * @author Maurice Tollmien
  */
-
-/* ---- System Header einbinden ---- */
 
 #include <stdarg.h>
 

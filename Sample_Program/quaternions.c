@@ -1,26 +1,22 @@
 /**
- * @file
- * Quaternionen
+ * Implementation of most relevant functions on Quaternions.
  *
  * @author Maurice Tollmien
  */
 
 /* ---- System Header einbinden ---- */
-#include <stdio.h>
-#include <stddef.h>
 #include <stdlib.h>
 #include <math.h>
 
 /* ---- Eigene Header einbinden ---- */
 #include "quaternions.h"
 
-
 /*
  * Some Vector functions so this library can be used stand-alone.
  */
 
 /**
- * Multipliziert einen Vektor mit einem Skalar.
+ * Multiply a vector with a scalar.
  */
 void multiplyVectorScalar_intern (Vector3D a, double s, Vector3D * res)
 {
@@ -30,7 +26,7 @@ void multiplyVectorScalar_intern (Vector3D a, double s, Vector3D * res)
 }
 
 /**
- * Addiert a und b und schreibt das Ergebnis in res.
+ * Add to vectors.
  */
 void addVectorVector_intern (Vector3D a, Vector3D b, Vector3D * res)
 {
@@ -40,26 +36,19 @@ void addVectorVector_intern (Vector3D a, Vector3D b, Vector3D * res)
 }
 
 /**
- * Konvertierungsfunktion,
- * wandelt drei Koordinaten in den dazugehörigen Vektor um
- * @param x
- * @param y
- * @param z
+ * Convert three separate values to a vector.
  */
-void toVector3D_intern(Vector3D vector, double x, double y, double z)
+void toVector3D_intern(Vector3D *vector, double x, double y, double z)
 {
-  vector[0] = x;
-  vector[1] = y;
-  vector[2] = z;
+  (*vector)[0] = x;
+  (*vector)[1] = y;
+  (*vector)[2] = z;
 }
 
 /**
- * Berechnet das Kreuzprodukt zweier Vektoren
- * @param
- * @param
- * @return
+ * Cross product of two vectors
  */
-void crossProduct3D_intern(Vector3D product, Vector3D a, Vector3D b)
+void crossProduct3D_intern(Vector3D *product, Vector3D a, Vector3D b)
 {
   toVector3D_intern(product, (a[1]*b[2] - a[2]*b[1]),
                       (a[2]*b[0] - a[0]*b[2]),
@@ -67,7 +56,7 @@ void crossProduct3D_intern(Vector3D product, Vector3D a, Vector3D b)
 }
 
 /**
- * Multipliziert zwei Vektoren miteinander (Skalarprodukt)
+ * Multiply to vectors (scalar product)
  */
 double multiplyVectorVector_intern (Vector3D a, Vector3D b)
 {
@@ -83,9 +72,9 @@ double multiplyVectorVector_intern (Vector3D a, Vector3D b)
  */
 
 /**
- * Multipliziert zwei Quaternions miteinander.
- * Vorsicht --> Nicht kommutativ!
- * Rechnet q1 * q2.
+ * Multiply to Quaternions with each other.
+ * Careful! Not commutative!!!
+ * Calculates: q1 * q2
  */
 Quaternion multQuaterionQuaterion (Quaternion q1, Quaternion q2)
 {
@@ -95,7 +84,7 @@ Quaternion multQuaterionQuaterion (Quaternion q1, Quaternion q2)
 
     res->s = q1->s*q2->s - multiplyVectorVector_intern(q1->v, q2->v);
 
-    crossProduct3D_intern (vres, q1->v, q2->v);
+    crossProduct3D_intern (&vres, q1->v, q2->v);
 
     multiplyVectorScalar_intern (q2->v, q1->s, &tmp);
     addVectorVector_intern (vres, tmp, &vres);
@@ -110,9 +99,9 @@ Quaternion multQuaterionQuaterion (Quaternion q1, Quaternion q2)
 }
 
 /**
- * Multipliziert ein Quaternion mit einem Skalar.
- * Dabei wird der Skalar in ein Quaternion umgewandelt und
- * es werden zwei Quaternions miteinander multipliziert.
+ * Multiplies a Quaternion and a scalar.
+ * Therefore the scalar will be converted to a Quaternion.
+ * After that the two Quaternions will be muliplied.
  */
 Quaternion multQuaterionScalar (Quaternion q1, double s)
 {
@@ -127,7 +116,7 @@ Quaternion multQuaterionScalar (Quaternion q1, double s)
 }
 
 /**
- * Rechnet q1 + q2.
+ * Calculates: q1 + q2.
  */
 Quaternion addQuaternionQuaternion (Quaternion q1, Quaternion q2)
 {
@@ -142,7 +131,7 @@ Quaternion addQuaternionQuaternion (Quaternion q1, Quaternion q2)
 }
 
 /**
- * Rechnet q1 - q2.
+ * Calculates q1 - q2.
  */
 Quaternion subtractQuaternionQuaternion (Quaternion q1, Quaternion q2)
 {
@@ -157,7 +146,7 @@ Quaternion subtractQuaternionQuaternion (Quaternion q1, Quaternion q2)
 }
 
 /**
- * Komplex konjugiert das Quaternion.
+ * Complex conjugate the Quaternion.
  */
 Quaternion conjugateQuaternion (Quaternion q1)
 {
@@ -169,7 +158,7 @@ Quaternion conjugateQuaternion (Quaternion q1)
 }
 
 /**
- * Invertiert das Quaternion.
+ * Invert the Quaternion.
  */
 Quaternion inverseQuaternion (Quaternion q1)
 {
@@ -179,7 +168,7 @@ Quaternion inverseQuaternion (Quaternion q1)
 }
 
 /**
- * Normalisiert das Quaternion auf eine Länge von 1.
+ * Normalize the Quaternion to a length of 1.
  */
 Quaternion normQuaternion (Quaternion q1)
 {
@@ -194,7 +183,7 @@ Quaternion normQuaternion (Quaternion q1)
 }
 
 /**
- * Gibt die Länge des Quaternions zurück.
+ * Calculates the length of the Quaternion.
  */
 double lengthQuaternion (Quaternion q1)
 {
@@ -202,7 +191,7 @@ double lengthQuaternion (Quaternion q1)
 }
 
 /**
- * Checkt, ob ein Quaternion normalisier ist.
+ * Check if the Quaternion is normalized.
  */
 int isNormQuaternion (Quaternion q1)
 {
