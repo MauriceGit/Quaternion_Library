@@ -63,6 +63,7 @@ point[2] = res->v[2];
 // Of course - free your memory!
 free(res);
 free(p);
+free(q);
 free(qtmp);
 ```
 
