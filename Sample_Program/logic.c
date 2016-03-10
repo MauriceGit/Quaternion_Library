@@ -244,13 +244,10 @@ void setQuaternionMovement (int x,int y)
     /* Quaternion der Drehachse */
     Quaternion q = malloc (sizeof (*q));
     /* Drehachse */
-    CGVector3D a;
+    Vector3D a = {100.9, -35.0, 3.0};
     /* Winkel */
     double angle;
 
-    a[0] = 100.9;
-    a[1] = -35.0;
-    a[2] = 3.0;
     normVector3D (a);
 
     G_QuaternionMove[0] = x-G_LastQuaternionCenter[0];
