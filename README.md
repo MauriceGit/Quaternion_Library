@@ -38,23 +38,32 @@ normQuaternion(q);
 
 // Create Quaternion of the point to rotate
 Quaternion p = malloc(sizeof(*p));
+Quaternion qtmp = malloc(sizeof(*qtmp));
+Quaternion res = malloc(sizeof(*qtmp));
 p->s = 0.0;
 p->v[0] = point[0];
 p->v[1] = point[1];
 p->v[2] = point[2];
 
+qtmp->s = q->s;
+qtmp->v[0] = q->v[0];
+qtmp->v[1] = q->v[1];
+qtmp->v[2] = q->v[2];
+
 // The actual calculations.
 //  ---  q p q*  ---
-p = multQuaterionQuaterion (multQuaterionQuaterion (q, p), inverseQuaternion (q));
+res = multQuaterionQuaterion (qtmp, p);
+res = multQuaterionQuaterion (res, inverseQuaternion (qtmp));
 
 // Write new rotated coordinates back to the point
-point[0] = p->v[0];
-point[1] = p->v[1];
-point[2] = p->v[2];
+point[0] = res->v[0];
+point[1] = res->v[1];
+point[2] = res->v[2];
 
 // Of course - free your memory!
-free(q);
+free(res);
 free(p);
+free(qtmp);
 ```
 
 # Compile and Run
