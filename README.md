@@ -69,7 +69,7 @@ point[2] = res->v[2];
 I only tested and ran this simulation on a debian-based Linux OS (Ubuntu, Mint, ...). It should run on other machines as well but is not
 tested.
 
-## **Requirements**
+## Requirements
 
 The following system-attributes are required for running this simulation:
 
@@ -77,7 +77,7 @@ The following system-attributes are required for running this simulation:
 
 - Unix-Libraries: xorg-dev, freeglut3-dev and mesa-common-dev
 
-## **Running**
+## Running
 
 Execute the following steps to run the sample:
 
@@ -88,6 +88,10 @@ Execute the following steps to run the sample:
 
 While the simulation runs, you can rotate the object by clicking and moving the mouse. Pressing **s** on your keyboard toggles
 between moving the camera or the object.
+
+# ToDo
+
+- Create some higher level function for rotating points or an array of points around a given axis while hiding the exact Quaternion implementation.
 
 # License
 
