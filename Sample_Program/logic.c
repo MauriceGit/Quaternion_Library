@@ -288,8 +288,8 @@ void setQuaternionMovement (int x,int y)
 
         /*  ---  q p q*  ---  */
         inverseQuaternion(&qtmp, &inverseQ);
-        multQuaterionQuaterion (&qtmp, &p, &res);
-        multQuaterionQuaterion (&res, &inverseQ, &res);
+        multQuaternionQuaternion (&qtmp, &p, &res);
+        multQuaternionQuaternion (&res, &inverseQ, &res);
 
         /* Ergebnis zurück schreiben */
         G_Object[i][0] = res.v[0];
