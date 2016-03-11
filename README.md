@@ -91,7 +91,7 @@ between moving the camera or the object.
 
 # ToDo
 
-- Create some higher level function for rotating points or an array of points around a given axis while hiding the exact Quaternion implementation.
+- Create some higher level functions for rotating points or an array of points around a given axis while hiding the exact Quaternion implementation.
 
 # License
 
