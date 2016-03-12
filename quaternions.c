@@ -192,6 +192,11 @@ int isNormQuaternion (const Quaternion* q1)
 
 /* Some higher level functions, using Quaternions */
 
+/**
+ * Rotates a given point around a given axis by a given angle.
+ * The rotations uses Quaternions internally and writes the rotated (modified)
+ * coordinates back to the point.
+ */
 void rotatePointAxis (Vector3D axis, double angle, Vector3D * point)
 {
     // create Quaternion from axis and angle
