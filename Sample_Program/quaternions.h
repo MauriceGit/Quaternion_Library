@@ -15,6 +15,8 @@ typedef struct
     Vector3D v;
 } Quaternion;
 
+/* Low level operations on Quaternions */
+
 void multQuaternionQuaternion (const Quaternion* q1, const Quaternion* q2, Quaternion * res);
 
 void multQuaternionScalar (const Quaternion* q1, double s, Quaternion* res);
@@ -32,6 +34,10 @@ void normQuaternion (Quaternion* q1);
 double lengthQuaternion (const Quaternion* q1);
 
 int isNormQuaternion (const Quaternion* q1);
+
+/* Some higher level functions, using Quaternions */
+
+void rotatePointAxis (Vector3D axis, double angle, Vector3D * point);
 
 #endif
 

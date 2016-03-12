@@ -241,8 +241,6 @@ void setCameraMovement(int x,int y)
 void setQuaternionMovement (int x,int y)
 {
     int i;
-    /* Quaternion der Drehachse */
-    Quaternion q;
     /* Drehachse */
     Vector3D a = {100.9, -35.0, 3.0};
     /* Winkel */
@@ -258,43 +256,19 @@ void setQuaternionMovement (int x,int y)
 
     angle = G_QuaternionMove[0]*PI/180.0/QUATERNION_MOVEMENT_SPEED;
 
-
-    q.s = cos (angle/2.0);
-    multiplyVectorScalar (a, sin(angle/2.0), &a);
-    /* Random Drehachse^^ */
-    q.v[0] = a[0];
-    q.v[1] = a[1];
-    q.v[2] = a[2];
-
-    normQuaternion(&q);
-
     for (i=0;i<G_ObjectSize; i++)
     {
-        /* Quaternion des Punktes */
-        Quaternion p;
-        Quaternion qtmp;
-        Quaternion res;
-        Quaternion inverseQ;
 
-        p.s = 0.0;
-        p.v[0] = G_Object[i][0];
-        p.v[1] = G_Object[i][1];
-        p.v[2] = G_Object[i][2];
+        Vector3D point;
+        point[0] = G_Object[i][0];
+        point[1] = G_Object[i][1];
+        point[2] = G_Object[i][2];
 
-        qtmp.s = q.s;
-        qtmp.v[0] = q.v[0];
-        qtmp.v[1] = q.v[1];
-        qtmp.v[2] = q.v[2];
+        rotatePointAxis(a, angle, &point);
 
-        /*  ---  q p q*  ---  */
-        inverseQuaternion(&qtmp, &inverseQ);
-        multQuaternionQuaternion (&qtmp, &p, &res);
-        multQuaternionQuaternion (&res, &inverseQ, &res);
-
-        /* Ergebnis zurück schreiben */
-        G_Object[i][0] = res.v[0];
-        G_Object[i][1] = res.v[1];
-        G_Object[i][2] = res.v[2];
+        G_Object[i][0] = point[0];
+        G_Object[i][1] = point[1];
+        G_Object[i][2] = point[2];
 
     }
 

@@ -70,7 +70,7 @@ static double multiplyVectorVector_intern (const Vector3D a, const Vector3D b)
 }
 
 /*
- * Functions regarding operations on Quaternions.
+ * Low level operations on Quaternions
  */
 
 /**
@@ -188,4 +188,44 @@ int isNormQuaternion (const Quaternion* q1)
 {
     double res = q1->s*q1->s + q1->v[0]*q1->v[0] + q1->v[1]*q1->v[1] + q1->v[2]*q1->v[2];
     return (res + EPS >= 1.0) && (res - EPS <= 1.0);
+}
+
+/* Some higher level functions, using Quaternions */
+
+void rotatePointAxis (Vector3D axis, double angle, Vector3D * point)
+{
+    // create Quaternion from axis and angle
+    Quaternion q;
+    Vector3D tmp;
+    tmp[0] = axis[0];
+    tmp[1] = axis[1];
+    tmp[2] = axis[2];
+    q.s = cos (angle/2.0);
+    multiplyVectorScalar_intern (axis, sin(angle/2.0), &tmp);
+    q.v[0] = tmp[0];
+    q.v[1] = tmp[1];
+    q.v[2] = tmp[2];
+
+    normQuaternion(&q);
+
+    Quaternion p;
+    Quaternion res;
+    Quaternion inverseQ;
+
+    // Create Quaternion of the point to rotate
+    p.s    = 0.0;
+    p.v[0] = (*point)[0];
+    p.v[1] = (*point)[1];
+    p.v[2] = (*point)[2];
+
+    // The actual calculations.
+    //  ---  q p q*  ---
+    inverseQuaternion(&q, &inverseQ);
+    multQuaternionQuaternion (&q, &p, &res);
+    multQuaternionQuaternion (&res, &inverseQ, &res);
+
+    // Write new rotated coordinates back to the point
+    (*point)[0] = res.v[0];
+    (*point)[1] = res.v[1];
+    (*point)[2] = res.v[2];
 }

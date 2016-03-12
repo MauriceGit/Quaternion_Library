@@ -20,48 +20,53 @@ It might or might not need some adjustments to work.
 
 ```c
 // define normalised axis
-Vector3D a = {0.0, 1.0, 0.0};
+Vector3D axis = {0.0, 1.0, 0.0};
 // define angle
 double angle = 0.1;
 // define point to rotate
 Vector3D point = {35.0, -28.3, 5.9};
-// create Quaternion
-Quaternion q;
 
-q->s = cos (angle/2.0);
-multiplyVectorScalar (a, sin(angle/2.0), &a);
-q->v[0] = a[0];
-q->v[1] = a[1];
-q->v[2] = a[2];
+// create Quaternion from axis and angle
+Quaternion q;
+q.s = cos (angle/2.0);
+multiplyVectorScalar_intern (axis, sin(angle/2.0), &tmp);
+q.v[0] = tmp[0];
+q.v[1] = tmp[1];
+q.v[2] = tmp[2];
 
 normQuaternion(&q);
 
-// Create Quaternion of the point to rotate
 Quaternion p;
-Quaternion qtmp;
 Quaternion res;
 Quaternion inverseQ;
 
-p->s = 0.0;
-p->v[0] = point[0];
-p->v[1] = point[1];
-p->v[2] = point[2];
-
-qtmp->s = q->s;
-qtmp->v[0] = q->v[0];
-qtmp->v[1] = q->v[1];
-qtmp->v[2] = q->v[2];
+// Create Quaternion of the point to rotate
+p.s    = 0.0;
+p.v[0] = point[0];
+p.v[1] = point[1];
+p.v[2] = point[2];
 
 // The actual calculations.
 //  ---  q p q*  ---
-inverseQuaternion(&qtmp, &inverseQ);
-multQuaternionQuaternion (&qtmp, &p, &res);
+inverseQuaternion(&q, &inverseQ);
+multQuaternionQuaternion (&q, &p, &res);
 multQuaternionQuaternion (&res, &inverseQ, &res);
 
 // Write new rotated coordinates back to the point
-point[0] = res->v[0];
-point[1] = res->v[1];
-point[2] = res->v[2];
+point[0] = res.v[0];
+point[1] = res.v[1];
+point[2] = res.v[2];
+```
+
+Or you could just use the higher level function ```c void rotatePointAxis (Vector3D axis, double angle, Vector3D * point)``` to
+rotate **point** **angle** degrees around **axis**:
+
+```c
+Vector3D axis = {100.9, -35.0, 3.0};
+double angle = 0.1;
+Vector3D point = {0.5, 4.9, 1.0};
+
+rotatePointAxis(axis, angle, &point);
 ```
 
 # Compile and Run
