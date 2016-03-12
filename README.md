@@ -66,6 +66,7 @@ Vector3D axis = {100.9, -35.0, 3.0};
 double angle = 0.1;
 Vector3D point = {0.5, 4.9, 1.0};
 
+// The rotated coordinates will be written back to point.
 rotatePointAxis(axis, angle, &point);
 ```
 
