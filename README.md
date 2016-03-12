@@ -59,7 +59,7 @@ point[2] = res.v[2];
 ```
 
 Or you could just use the higher level function *void rotatePointAxis (Vector3D axis, double angle, Vector3D * point)* to
-rotate **point** **angle** degrees around **axis**:
+rotate **point** around **axis** by **angle** degrees:
 
 ```c
 Vector3D axis = {100.9, -35.0, 3.0};
