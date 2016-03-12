@@ -4,12 +4,14 @@
  * @author Maurice Tollmien
  */
 
-/* ---- System Header einbinden ---- */
+/* ---- System Header ---- */
 #include <stdlib.h>
 #include <math.h>
 
-/* ---- Eigene Header einbinden ---- */
+/* ---- My Header ---- */
 #include "quaternions.h"
+
+#define EPS     0.0001
 
 /*
  * Some Vector functions so this library can be used stand-alone.
@@ -18,7 +20,7 @@
 /**
  * Multiply a vector with a scalar.
  */
-void multiplyVectorScalar_intern (const Vector3D a, double s, Vector3D * res)
+static void multiplyVectorScalar_intern (const Vector3D a, double s, Vector3D * res)
 {
     int i;
     for (i=0;i<3;i++)
@@ -28,7 +30,7 @@ void multiplyVectorScalar_intern (const Vector3D a, double s, Vector3D * res)
 /**
  * Add to vectors.
  */
-void addVectorVector_intern (const Vector3D a, const Vector3D b, Vector3D * res)
+static void addVectorVector_intern (const Vector3D a, const Vector3D b, Vector3D * res)
 {
     int i;
     for (i=0;i<3;i++)
@@ -38,7 +40,7 @@ void addVectorVector_intern (const Vector3D a, const Vector3D b, Vector3D * res)
 /**
  * Convert three separate values to a vector.
  */
-void toVector3D_intern(Vector3D *vector, double x, double y, double z)
+static void toVector3D_intern(Vector3D *vector, double x, double y, double z)
 {
   (*vector)[0] = x;
   (*vector)[1] = y;
@@ -48,7 +50,7 @@ void toVector3D_intern(Vector3D *vector, double x, double y, double z)
 /**
  * Cross product of two vectors
  */
-void crossProduct3D_intern(Vector3D *product, const Vector3D a, const Vector3D b)
+static void crossProduct3D_intern(Vector3D *product, const Vector3D a, const Vector3D b)
 {
   toVector3D_intern(product, (a[1]*b[2] - a[2]*b[1]),
                       (a[2]*b[0] - a[0]*b[2]),
@@ -58,7 +60,7 @@ void crossProduct3D_intern(Vector3D *product, const Vector3D a, const Vector3D b
 /**
  * Multiply to vectors (scalar product)
  */
-double multiplyVectorVector_intern (const Vector3D a, const Vector3D b)
+static double multiplyVectorVector_intern (const Vector3D a, const Vector3D b)
 {
     int i;
     double res = 0.0;

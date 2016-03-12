@@ -6,10 +6,6 @@
  * @author Maurice Tollmien
  */
 
-#include <stdarg.h>
-
-#define EPS     0.0001
-
 typedef double Vector3D[3];
 
 /** Quaternion */
@@ -36,20 +32,6 @@ void normQuaternion (Quaternion* q1);
 double lengthQuaternion (const Quaternion* q1);
 
 int isNormQuaternion (const Quaternion* q1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif
 
