@@ -2,7 +2,7 @@
 #define __MTQUATERNIONS_H__
 /**
  * Interface for some operations on Quaternions.
- * All operations are prefixed with 'mt' to avoid name clashes and get a
+ * All operations are prefixed with 'mt' to avoid name clashes and get an
  * attempt for a unique prefix.
  *
  * @author Maurice Tollmien

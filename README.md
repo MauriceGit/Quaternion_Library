@@ -116,12 +116,3 @@ MTVec3D point = {0.5, 4.9, 1.0};
 point = mtRotatePointAxis (axis, angle, point);
 ```
 
-# License
-
-Excerpt from the LICENSE file:
-
-"Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the
-copyright notice and this permission notice appear in all copies."
-
-See the LICENCE file for more information what you have to include.
