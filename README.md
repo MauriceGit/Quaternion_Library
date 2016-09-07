@@ -18,13 +18,10 @@ The following functions are provided by this library.
 
 ## Low level Quaternion operations
 
-* MTQuaternion **mtCreateMTQuaternion** (MTVec3D axis, double angle)
-
-    Creates a new Quaternion and returns it.
-
-* MTQuaternion **mtMultMTQuaternionMTQuaternion** (const MTQuaternion* q1, const MTQuaternion* q2)
-
-    Multiplies two Quaternions with each other and returns a new Quaternion.
+Function | Description
+--- | ---
+MTQuaternion **mtCreateMTQuaternion** (MTVec3D axis, double angle) | Creates a new Quaternion and returns it.
+MTQuaternion **mtMultMTQuaternionMTQuaternion** (const MTQuaternion* q1, const MTQuaternion* q2) | Multiplies two Quaternions with each other and returns a new Quaternion.
 
 * MTQuaternion **mtMultMTQuaternionScalar** (const MTQuaternion* q1, double s)
 
