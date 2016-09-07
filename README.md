@@ -60,11 +60,11 @@ The following functions are provided by this library.
 
 ## High level Quaternion operations
 
-* MTVec3D mtRotatePointWithMTQuaternion(MTQuaternion q, MTVec3D point)**
+* MTVec3D **mtRotatePointWithMTQuaternion** (MTQuaternion q, MTVec3D point)
 
     Rotates a given point with a given Quaternion and returnes a new point.
 
-* MTVec3D mtRotatePointAxis (MTVec3D axis, double angle, MTVec3D point)**
+* MTVec3D **mtRotatePointAxis** (MTVec3D axis, double angle, MTVec3D point)
 
     Given an axis, angle and a point, the return value will equal the given point, rotated around the given axis at a given angle (counter-clocwise).
 
