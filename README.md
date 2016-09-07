@@ -10,7 +10,7 @@ Because some vector based math is required to calculate Quaterions, I provide th
 
 [https://github.com/MauriceGit/Vector_Library](https://github.com/MauriceGit/Vector_Library).
 
-Just place both the **mtVector.c** and **mtVector.h** in the same directory and compile it with your project.
+Just place both the mtVector.c and mtVector.h in the same directory and compile it with your project.
 
 # Interface
 
@@ -20,50 +20,22 @@ The following functions are provided by this library.
 
 Function | Description
 --- | ---
-MTQuaternion **mtCreateMTQuaternion** (MTVec3D axis, double angle) | Creates a new Quaternion and returns it.
-MTQuaternion **mtMultMTQuaternionMTQuaternion** (const MTQuaternion* q1, const MTQuaternion* q2) | Multiplies two Quaternions with each other and returns a new Quaternion.
-
-* MTQuaternion **mtMultMTQuaternionScalar** (const MTQuaternion* q1, double s)
-
-    Multiplies a Quaternion with a scalar and returnes a new Quaternion.
-
-* MTQuaternion **mtAddMTQuaternionMTQuaternion** (const MTQuaternion* q1, const MTQuaternion* q2)
-
-    Adds two Quaternions with eath other and returnes a new Quaternion.
-
-* MTQuaternion **mtSubtractMTQuaternionMTQuaternion** (const MTQuaternion* q1, const MTQuaternion* q2)
-
-    Subtracts a Quaternion q2 from a Quaternion q1. Returnes new Quaternion.
-
-* MTQuaternion **mtConjugateMTQuaternion** (const MTQuaternion* q1)
-
-    Complex conjugates a Quaternion. Returnes new, conjugated Quaternion.
-
-* MTQuaternion **mtInverseMTQuaternion** (const MTQuaternion* q1)
-
-    Calculates the inverse of a Quaternion and returnes a a new inverted Quaternion.
-
-* void **mtNormMTQuaternion** (MTQuaternion* q1)
-
-    Normalises a Quaternion.
-
-* double **mtLengthMTQuaternion** (const MTQuaternion* q1)
-
-    Calculates the length of a Quaternion.
-
-* int **mtIsNormMTQuaternion** (const MTQuaternion* q1)
-
-    Checks, if a Quaternion is normalised.
+`MTQuaternion mtCreateMTQuaternion (MTVec3D axis, double angle)` | Creates a new Quaternion and returns it.
+`MTQuaternion mtMultMTQuaternionMTQuaternion (const MTQuaternion* q1, const MTQuaternion* q2)` | Multiplies two Quaternions with each other and returns a new Quaternion.
+`MTQuaternion mtMultMTQuaternionScalar (const MTQuaternion* q1, double s)` | Multiplies a Quaternion with a scalar and returnes a new Quaternion.
+`MTQuaternion mtAddMTQuaternionMTQuaternion (const MTQuaternion* q1, const MTQuaternion* q2)` | Adds two Quaternions with eath other and returnes a new Quaternion.
+`MTQuaternion mtSubtractMTQuaternionMTQuaternion (const MTQuaternion* q1, const MTQuaternion* q2)` | Subtracts a Quaternion q2 from a Quaternion q1. Returnes new Quaternion.
+`MTQuaternion mtConjugateMTQuaternion (const MTQuaternion* q1)` | Complex conjugates a Quaternion. Returnes new, conjugated Quaternion.
+`MTQuaternion mtInverseMTQuaternion (const MTQuaternion* q1)` | Calculates the inverse of a Quaternion and returnes a a new inverted Quaternion.
+`void mtNormMTQuaternion (MTQuaternion* q1)` | Normalises a Quaternion.
+`double mtLengthMTQuaternion (const MTQuaternion* q1)` | Calculates the length of a Quaternion.
+`int mtIsNormMTQuaternion (const MTQuaternion* q1)` | Checks, if a Quaternion is normalised.
 
 ## High level Quaternion operations
 
-* MTVec3D **mtRotatePointWithMTQuaternion** (MTQuaternion q, MTVec3D point)
-
-    Rotates a given point with a given Quaternion and returnes a new point.
-
-* MTVec3D **mtRotatePointAxis** (MTVec3D axis, double angle, MTVec3D point)
-
-    Given an axis, angle and a point, the return value will equal the given point, rotated around the given axis at a given angle (counter-clocwise).
+`MTVec3D mtRotatePointWithMTQuaternion (MTQuaternion q, MTVec3D point)` | Rotates a given point with a given Quaternion and returnes a new point.
+`MTVec3D mtRotatePointAxis (MTVec3D axis, double angle, MTVec3D point)` | Given an axis, angle and a point, the return value will equal the given point,
+rotated around the given axis at a given angle (counter-clocwise).
 
 # Usage
 
