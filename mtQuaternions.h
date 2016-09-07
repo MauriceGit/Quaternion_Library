@@ -29,7 +29,7 @@ MTQuaternion mtAddMTQuaternionMTQuaternion (const MTQuaternion* q1, const MTQuat
 
 MTQuaternion mtSubtractMTQuaternionMTQuaternion (const MTQuaternion* q1, const MTQuaternion* q2);
 
-void mtConjugateMTQuaternion (MTQuaternion* q1);
+MTQuaternion mtConjugateMTQuaternion (const MTQuaternion* q1);
 
 MTQuaternion mtInverseMTQuaternion (const MTQuaternion* q1);
 

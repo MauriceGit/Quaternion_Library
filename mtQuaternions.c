@@ -86,9 +86,12 @@ MTQuaternion mtSubtractMTQuaternionMTQuaternion (const MTQuaternion* q1, const M
 /**
  * Complex conjugate the MTQuaternion.
  */
-void mtConjugateMTQuaternion (MTQuaternion* q1)
+MTQuaternion mtConjugateMTQuaternion (const MTQuaternion* q1)
 {
-    q1->v = mtMultiplyVectorScalar(q1->v, -1.0);
+    MTQuaternion res;
+    res.s = q1->s;
+    res.v = mtMultiplyVectorScalar(q1->v, -1.0);
+    return res;
 }
 
 /**
@@ -99,9 +102,7 @@ MTQuaternion mtInverseMTQuaternion (const MTQuaternion* q1)
     MTQuaternion res;
     double qlen = pow (mtLengthMTQuaternion (q1), 2);
 
-    MTQuaternion tmp = *q1;
-
-    mtConjugateMTQuaternion(&tmp);
+    MTQuaternion tmp = mtConjugateMTQuaternion(q1);
 
     return mtMultMTQuaternionScalar (&tmp, 1.0 / qlen);
 }
