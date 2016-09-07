@@ -38,9 +38,9 @@ The following functions are provided by this library.
 
     Subtracts a Quaternion q2 from a Quaternion q1. Returnes new Quaternion.
 
-* void **mtConjugateMTQuaternion** (MTQuaternion* q1)
+* MTQuaternion **mtConjugateMTQuaternion** (const MTQuaternion* q1)
 
-    Complex conjugates a Quaternion.
+    Complex conjugates a Quaternion. Returnes new, conjugated Quaternion.
 
 * MTQuaternion **mtInverseMTQuaternion** (const MTQuaternion* q1)
 
