@@ -30,7 +30,7 @@ The following functions are provided by this library.
 
     Multiplies a Quaternion with a scalar and returnes a new Quaternion.
 
-* MTQuaternion **mtAddMTQuaternionMTQuaternion** (const MTQuaternion* q1, const MTQuaternion* q2)
+* ```c MTQuaternion **mtAddMTQuaternionMTQuaternion** (const MTQuaternion* q1, const MTQuaternion* q2)```
 
     Adds two Quaternions with eath other and returnes a new Quaternion.
 
