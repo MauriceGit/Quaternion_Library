@@ -1,99 +1,108 @@
 # Quaternion Library
 
-This repository is all about the files: **quaternions.h** and **quaternions.c**.
+This repository represent an interface (library) of Quaternions and the most common operations on a Quaternion.
+No extended knowledge of Quaternions is neccesary for the use of this library. If you like to get familiar with Quaternions,
+I recommend the relevant Wikipedia article: [https://en.wikipedia.org/wiki/Quaternion](https://en.wikipedia.org/wiki/Quaternion).
 
-They represent an interface (library) of Quaternions and the most common operations on a Quaternion.
+# Library Dependencies
 
-Corresponding to the library, I wrote a small sample program, that rotates a simple geometry around a fixed axis
-with Quaternions. It is used for all calculations of the new rotated position.
+Because some vector based math is required to calculate Quaterions, I provide the appropriate Vector library needed to use the Quaternion library here:
 
-If you want to know how and why Quaternions work - please read it up on the internet. This is just a practical approach
-and the implementation of common operations.
+[https://github.com/MauriceGit/Vector_Library](https://github.com/MauriceGit/Vector_Library).
+
+Just place both the **mtVector.c** and **mtVector.h** in the same directory and compile it with your project.
+
+# Interface
+
+The following functions are provided by this library.
+
+## Low level Quaternion operations
+
+* **MTQuaternion mtCreateMTQuaternion(MTVec3D axis, double angle)**
+    Creates a new Quaternion and returns it.
+
+* **MTQuaternion mtMultMTQuaternionMTQuaternion (const MTQuaternion* q1, const MTQuaternion* q2)**
+    Multiplies two Quaternions with each other and returns a new Quaternion.
+
+* **MTQuaternion mtMultMTQuaternionScalar (const MTQuaternion* q1, double s)**
+    Multiplies a Quaternion with a scalar and returnes a new Quaternion.
+
+* **MTQuaternion mtAddMTQuaternionMTQuaternion (const MTQuaternion* q1, const MTQuaternion* q2)**
+    Adds two Quaternions with eath other and returnes a new Quaternion.
+
+* **MTQuaternion mtSubtractMTQuaternionMTQuaternion (const MTQuaternion* q1, const MTQuaternion* q2)**
+    Subtracts a Quaternion q2 from a Quaternion q1. Returnes new Quaternion.
+
+* **void mtConjugateMTQuaternion (MTQuaternion* q1)**
+    Complex conjugates a Quaternion.
+
+* **MTQuaternion mtInverseMTQuaternion (const MTQuaternion* q1)**
+    Calculates the inverse of a Quaternion and returnes a a new inverted Quaternion.
+
+* **void mtNormMTQuaternion (MTQuaternion* q1)**
+    Normalises a Quaternion.
+
+* **double mtLengthMTQuaternion (const MTQuaternion* q1)**
+    Calculates the length of a Quaternion.
+
+* **int mtIsNormMTQuaternion (const MTQuaternion* q1)**
+    Checks, if a Quaternion is normalised.
+
+## High level Quaternion operations
+
+* **MTVec3D mtRotatePointWithMTQuaternion(MTQuaternion q, MTVec3D point)**
+    Rotates a given point with a given Quaternion and returnes a new point.
+
+* **MTVec3D mtRotatePointAxis (MTVec3D axis, double angle, MTVec3D point)**
+    Given an axis, angle and a point, the return value will equal the given point, rotated around the given axis at a given angle (counter-clocwise).
 
 # Usage
 
 An example usage for a Quaternion could be, to rotate a given Point around a given axis, using Quaternions.
 
-This example code is in C syntax and serves only to demonstrate a potential use of Quaternions to
-calculate a rotation. It uses types and libraries, defined in the files: **quaternions.h**, **vector.h**, **types.h** from the sample code.
-It might or might not need some adjustments to work.
+## Low level approach
 
 ```c
 // define normalised axis
-Vector3D axis = {0.0, 1.0, 0.0};
+MTVec3D axis = {0.0, 1.0, 0.0};
 // define angle
 double angle = 0.1;
 // define point to rotate
-Vector3D point = {35.0, -28.3, 5.9};
+MTVec3D point = {35.0, -28.3, 5.9};
 
 // create Quaternion from axis and angle
 Quaternion q;
 q.s = cos (angle/2.0);
-multiplyVectorScalar_intern (axis, sin(angle/2.0), &tmp);
-q.v[0] = tmp[0];
-q.v[1] = tmp[1];
-q.v[2] = tmp[2];
+q.v = mtMultiplyVectorScalar(axis, sin(angle/2.0))
 
-normQuaternion(&q);
+mtNormMTQuaternion(&q);
 
-Quaternion p;
-Quaternion res;
-Quaternion inverseQ;
-
-// Create Quaternion of the point to rotate
+// Create MTQuaternion of the point to rotate
+MTQuaternion p;
 p.s    = 0.0;
-p.v[0] = point[0];
-p.v[1] = point[1];
-p.v[2] = point[2];
+p.v = point;
 
 // The actual calculations.
 //  ---  q p q*  ---
-inverseQuaternion(&q, &inverseQ);
-multQuaternionQuaternion (&q, &p, &res);
-multQuaternionQuaternion (&res, &inverseQ, &res);
+MTQuaternion inverseQ = mtInverseMTQuaternion(&q);
+MTQuaternion res = mtMultMTQuaternionMTQuaternion (&q, &p);
+res = mtMultMTQuaternionMTQuaternion (&res, &inverseQ);
 
 // Write new rotated coordinates back to the point
-point[0] = res.v[0];
-point[1] = res.v[1];
-point[2] = res.v[2];
+point = res.v;
+
 ```
 
-Or you could just use the higher level function *void rotatePointAxis (Vector3D axis, double angle, Vector3D * point)* to
-rotate **point** around **axis** by **angle** degrees:
+## High level approach
 
 ```c
-Vector3D axis = {100.9, -35.0, 3.0};
+MTVec3D axis = {100.9, -35.0, 3.0};
 double angle = 0.1;
-Vector3D point = {0.5, 4.9, 1.0};
+MTVec3D point = {0.5, 4.9, 1.0};
 
 // The rotated coordinates will be written back to point.
-rotatePointAxis(axis, angle, &point);
+point = mtRotatePointAxis (axis, angle, point);
 ```
-
-# Compile and Run
-
-I only tested and ran this simulation on a debian-based Linux OS (Ubuntu, Mint, ...). It should run on other machines as well but is not
-tested.
-
-## Requirements
-
-The following system-attributes are required for running this simulation:
-
-- A graphics card supporting OpenGL.
-
-- Unix-Libraries: xorg-dev, freeglut3-dev and mesa-common-dev
-
-## Running
-
-Execute the following steps to run the sample:
-
-- ./compile.sh
-
-- ./quaternions
-
-
-While the simulation runs, you can rotate the object by clicking and moving the mouse. Pressing **s** on your keyboard toggles
-between moving the camera or the object.
 
 # License
 
